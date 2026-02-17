@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Friction — Think Before AI Thinks For You</title>
+  <meta name="description" content="Friction is a browser tool that helps students plan before they prompt — and helps families navigate AI together.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #f7f5f2;
+      --cream: #eae6df;
+      --warm-gray: #9a9590;
+      --amber: #c4702a;
+      --amber-light: #e8a050;
+      --amber-glow: rgba(196, 112, 42, 0.12);
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      background: var(--black);
+    }
+
+    body {
+      font-family: var(--sans);
+      color: var(--white);
+      background: var(--black);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* --- Grain overlay --- */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* --- Navigation --- */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(247, 245, 242, 0.06);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid rgba(196, 112, 42, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--amber-glow);
+      border-color: var(--amber);
+    }
+
+    /* --- Hero --- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2.5rem 6rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.3s;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 400;
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: 1.2rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--warm-gray);
+      max-width: 600px;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.9s;
+    }
+
+    .hero-cta {
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 1.8s;
+    }
+
+    .scroll-indicator span {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--warm-gray), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* --- Sections --- */
+    section {
+      padding: 6rem 2.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 2rem;
+    }
+
+    .section-heading {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--warm-gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-body strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* --- Divider --- */
+    .divider {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(247, 245, 242, 0.1), transparent);
+    }
+
+    /* --- Quote block --- */
+    .quote-section {
+      padding: 5rem 2.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quote {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--cream);
+      padding-left: 2rem;
+      border-left: 2px solid var(--amber);
+    }
+
+    .quote-attr {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--warm-gray);
+      margin-top: 1.5rem;
+      padding-left: 2rem;
+    }
+
+    /* --- Signup --- */
+    .signup-section {
+      padding: 6rem 2.5rem 8rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .signup-section .section-heading {
+      margin-bottom: 1rem;
+    }
+
+    .signup-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--warm-gray);
+      margin-bottom: 3rem;
+      line-height: 1.7;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 480px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .signup-form input[type="email"] {
+      flex: 1;
+      padding: 0.85rem 1.2rem;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 300;
+      background: rgba(247, 245, 242, 0.06);
+      border: 1px solid rgba(247, 245, 242, 0.12);
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .signup-form input[type="email"]::placeholder {
+      color: var(--warm-gray);
+    }
+
+    .signup-form input[type="email"]:focus {
+      border-color: var(--amber);
+    }
+
+    .signup-form button {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--amber);
+      border: none;
+      padding: 0.85rem 1.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .signup-form button:hover {
+      background: var(--amber-light);
+    }
+
+    .signup-note {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--warm-gray);
+      letter-spacing: 0.05em;
+    }
+
+    .signup-success {
+      display: none;
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      color: var(--amber);
+      font-weight: 400;
+    }
+
+    /* --- Footer --- */
+    footer {
+      padding: 3rem 2.5rem;
+      border-top: 1px solid rgba(247, 245, 242, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-from {
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--warm-gray);
+    }
+
+    .footer-from a {
+      color: var(--warm-gray);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-from a:hover {
+      color: var(--white);
+    }
+
+    .footer-right {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: rgba(154, 149, 144, 0.5);
+      letter-spacing: 0.05em;
+    }
+
+    /* --- Animations --- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 640px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 5rem; }
+      section { padding: 4rem 1.5rem; }
+      .quote-section { padding: 3.5rem 1.5rem; }
+      .signup-section { padding: 4rem 1.5rem 6rem; }
+      .signup-form { flex-direction: column; }
+      .signup-form button { width: 100%; }
+      footer { padding: 2.5rem 1.5rem; }
+      .scroll-indicator { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-logo">Friction</div>
+    <a href="#signup" class="nav-cta">Join the waitlist</a>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero" style="position: relative;">
+    <p class="hero-label">Coming Soon</p>
+    <h1>Not all friction<br>is <em>bad.</em></h1>
+    <p class="hero-sub">
+      Every AI tool is designed to be frictionless. That's the problem.
+      Friction is a browser tool that helps students think before AI thinks
+      for them — and helps families navigate AI together.
+    </p>
+    <div class="hero-cta">
+      <a href="#signup" class="nav-cta" style="font-size: 0.8rem; padding: 0.7rem 2rem;">Get early access</a>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <!-- The Problem -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">The Problem</p>
+      <h2 class="section-heading">The most powerful tools in history. Zero preparation to use them.</h2>
+      <p class="section-body">
+        We spend a full year preparing teenagers to drive — classes, permits, supervised hours,
+        graduated independence. We do this because cars are powerful and the stakes are real.
+      </p>
+      <p class="section-body">
+        <strong>Nothing like this exists for AI.</strong> Students go from zero to unrestricted access
+        to the most powerful cognitive tools ever created — with no structured on-ramp, no co-pilot,
+        no guided practice.
+      </p>
+      <p class="section-body">
+        And here's what most adults don't see: <strong>kids are worried about this too.</strong>
+        They feel guilty about AI use. They fear losing what makes their thinking unique.
+        They dumb down their writing to avoid suspicion. They want guidance — and all
+        most of them have heard is "don't use ChatGPT to cheat."
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <!-- The Idea -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">The Idea</p>
+      <h2 class="section-heading">A three-minute pause that changes everything.</h2>
+      <p class="section-body">
+        Friction inserts a brief, intentional pause at the moment a student opens
+        ChatGPT, Claude, or Gemini. Not to block them. To help them <strong>plan</strong>.
+      </p>
+      <p class="section-body">
+        What are you working on? What do you already know? What specific help do you want
+        from AI — and what do you want to own yourself?
+      </p>
+      <p class="section-body">
+        In under three minutes, the student has a clear plan and a well-crafted prompt
+        that produces dramatically better results than a vague "help me with my essay."
+        <strong>Plan Mode doesn't slow students down. It makes their AI use genuinely better.</strong>
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <!-- Quote -->
+  <div class="quote-section">
+    <div class="reveal">
+      <blockquote class="quote">
+        "I feel guilty about using AI, but I can't keep up without it.
+        No one's really told me how to use it well — just not to cheat."
+      </blockquote>
+      <p class="quote-attr">— High school student, age 15</p>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <!-- For Families -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">For Families</p>
+      <h2 class="section-heading">Same side of the table.</h2>
+      <p class="section-body">
+        Friction isn't a monitoring tool. It's not a filter. It's a shared practice —
+        something families do together — because when it comes to AI, <strong>parents and kids
+        share the same concerns.</strong>
+      </p>
+      <p class="section-body">
+        Students build an AI Skills Profile that shows how they're growing as intentional AI users.
+        Families can see patterns, have real conversations, and build trust around
+        AI use — together. No surveillance. No secrets. Just honest navigation of something
+        new and important.
+      </p>
+      <p class="section-body">
+        Built by a family, for families.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
+  <!-- Signup -->
+  <section class="signup-section" id="signup">
+    <div class="reveal">
+      <p class="section-label">Early Access</p>
+      <h2 class="section-heading">Be first to try Friction.</h2>
+      <p class="signup-sub">
+        We're building the first version now. Join the waitlist to get
+        early access and shape what comes next.
+      </p>
+      <!-- Replace the action URL with your ConvertKit/Kit form endpoint -->
+      <form class="signup-form" id="waitlist-form">
+        <input type="email" name="email" placeholder="Your email" required>
+        <button type="submit">Join waitlist</button>
+      </form>
+      <p class="signup-note">No spam. Just updates on the build.</p>
+      <p class="signup-success" id="signup-success">
+        You're on the list. We'll be in touch soon.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p class="footer-from">
+      From the creator of <a href="https://familythroughlines.com" target="_blank" rel="noopener">Family Throughlines</a>
+    </p>
+    <p class="footer-right">&copy; 2026 Friction</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Form handling — replace with actual form endpoint
+    document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = this.querySelector('input[type="email"]').value;
+      
+      // TODO: Replace this section with your ConvertKit/Kit form submission
+      // Example with Kit (ConvertKit):
+      // const response = await fetch('https://app.kit.com/forms/YOUR_FORM_ID/subscriptions', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email_address: email })
+      // });
+      
+      // For now, just show success state
+      // Remove this placeholder and uncomment the above when you have your form endpoint
+      console.log('Waitlist signup:', email);
+      
+      this.style.display = 'none';
+      document.getElementById('signup-success').style.display = 'block';
+      document.querySelector('.signup-note').style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
