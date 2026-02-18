@@ -567,17 +567,11 @@
       e.preventDefault();
       const email = this.querySelector('input[type="email"]').value;
       
-      // TODO: Replace this section with your ConvertKit/Kit form submission
-      // Example with Kit (ConvertKit):
-      // const response = await fetch('https://app.kit.com/forms/YOUR_FORM_ID/subscriptions', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email_address: email })
-      // });
-      
-      // For now, just show success state
-      // Remove this placeholder and uncomment the above when you have your form endpoint
-      console.log('Waitlist signup:', email);
+      const response = await fetch('https://api.convertkit.com/v3/forms/9100815/subscribe', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ api_key: 'nDt2H6Z46daBKLuAwZv7eA', email: email })
+});
       
       this.style.display = 'none';
       document.getElementById('signup-success').style.display = 'block';
