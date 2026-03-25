@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — f/riction</title>
+  <meta name="description" content="f/riction collects no data. No accounts, no analytics, no tracking. Everything stays on your device.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #f7f5f2;
+      --cream: #eae6df;
+      --warm-gray: #9a9590;
+      --amber: #c4702a;
+      --amber-light: #e8a050;
+      --amber-glow: rgba(196, 112, 42, 0.12);
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { font-size: 16px; scroll-behavior: smooth; background: var(--black); }
+
+    body {
+      font-family: var(--sans);
+      color: var(--white);
+      background: var(--black);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    nav {
+      position: fixed; top: 0; width: 100%;
+      padding: 1.5rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(247, 245, 242, 0.06);
+    }
+
+    .nav-logo {
+      font-family: var(--mono); font-weight: 500;
+      font-size: 1.1rem; letter-spacing: 0.15em;
+      color: var(--white); text-decoration: none;
+    }
+
+    .logo-f { color: #c4702a; }
+
+    .nav-cta {
+      font-family: var(--mono); font-size: 0.75rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--amber); text-decoration: none;
+      padding: 0.5rem 1.2rem;
+      border: 1px solid rgba(196, 112, 42, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover { background: var(--amber-glow); border-color: var(--amber); }
+
+    .page-wrap {
+      max-width: 720px; margin: 0 auto;
+      padding: 140px 2.5rem 100px;
+    }
+
+    .page-label {
+      font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 20px; display: block;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 400; line-height: 1.1;
+      color: var(--white); margin-bottom: 16px; letter-spacing: -0.01em;
+    }
+
+    .effective-date {
+      font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(154, 149, 144, 0.5);
+      margin-bottom: 56px; display: block;
+    }
+
+    .summary-box {
+      background: rgba(196, 112, 42, 0.07);
+      border: 1px solid rgba(196, 112, 42, 0.18);
+      border-radius: 4px; padding: 28px 32px; margin-bottom: 56px;
+    }
+
+    .summary-box p {
+      font-size: 1.05rem; font-weight: 400;
+      color: var(--white); line-height: 1.65;
+    }
+
+    .summary-box strong { color: var(--amber); font-weight: 500; }
+
+    .policy-section {
+      margin-bottom: 44px; padding-bottom: 44px;
+      border-bottom: 1px solid rgba(247, 245, 242, 0.06);
+    }
+
+    .policy-section:last-of-type { border-bottom: none; }
+
+    h2 {
+      font-family: var(--sans); font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--warm-gray); margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 1rem; font-weight: 300;
+      color: rgba(247, 245, 242, 0.7);
+      line-height: 1.75; margin-bottom: 14px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul { list-style: none; margin: 4px 0 14px; }
+
+    ul li {
+      font-size: 1rem; font-weight: 300;
+      color: rgba(247, 245, 242, 0.7);
+      line-height: 1.75; padding-left: 20px; position: relative;
+    }
+
+    ul li::before {
+      content: '—'; position: absolute; left: 0;
+      color: var(--amber); font-weight: 400;
+    }
+
+    code {
+      font-family: var(--mono); font-size: 0.85em;
+      color: var(--warm-gray);
+      background: rgba(247, 245, 242, 0.06);
+      padding: 2px 6px; border-radius: 3px;
+    }
+
+    a {
+      color: var(--amber); text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(196, 112, 42, 0.35);
+      transition: color 0.2s, text-decoration-color 0.2s;
+    }
+
+    a:hover {
+      color: var(--amber-light);
+      text-decoration-color: rgba(232, 160, 80, 0.5);
+    }
+
+    .future-box {
+      background: rgba(247, 245, 242, 0.03);
+      border: 1px solid rgba(247, 245, 242, 0.08);
+      border-radius: 4px; padding: 24px 28px; margin-top: 16px;
+    }
+
+    .future-box p {
+      font-size: 0.92rem;
+      color: rgba(247, 245, 242, 0.5);
+      margin-bottom: 10px;
+    }
+
+    .future-box p:last-child { margin-bottom: 0; }
+
+    .future-label {
+      font-family: var(--mono); font-size: 0.65rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(154, 149, 144, 0.4);
+      display: block; margin-bottom: 12px;
+    }
+
+    footer {
+      border-top: 1px solid rgba(247, 245, 242, 0.06);
+      padding: 2.5rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .footer-left, .footer-right {
+      font-family: var(--mono); font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(154, 149, 144, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo"><span class="logo-f">f/</span>riction</a>
+    <a href="/#waitlist" class="nav-cta">Get Early Access</a>
+  </nav>
+
+  <div class="page-wrap">
+
+    <span class="page-label">Legal</span>
+    <h1>Privacy Policy</h1>
+    <span class="effective-date">Effective March 2026</span>
+
+    <div class="summary-box">
+      <p><strong>The short version:</strong> f/riction currently collects nothing. No data leaves your device. No accounts, no analytics, no tracking. Future features that involve sharing data will always be opt-in and clearly explained before you decide.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>What f/riction is</h2>
+      <p>f/riction is a Chrome browser extension that helps students use AI tools more intentionally. It presents a brief planning flow when a student navigates to an AI tool — Claude, ChatGPT, Gemini, Grok, or Google AI Mode — and offers a session-level choice on regular Google search.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Data we collect</h2>
+      <p>Currently: none. f/riction does not collect, transmit, store, or share any personal information, browsing history, search queries, or usage data. The extension has no server-side component. There are no user accounts.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Data stored locally on your device</h2>
+      <p>f/riction uses Chrome's local storage (<code>chrome.storage.local</code>) to save session information on your device only. This includes:</p>
+      <ul>
+        <li>Which AI platform was visited</li>
+        <li>Whether you completed or skipped the planning flow</li>
+        <li>The planning steps you filled in, if you completed the flow</li>
+        <li>Your Google search session preference</li>
+        <li>Timestamps for the 30-minute session window</li>
+      </ul>
+      <p>This data never leaves your browser. It is not accessible to us, to schools, or to any third party. You can clear it at any time by removing the extension.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>What f/riction does not do</h2>
+      <ul>
+        <li>Read, access, or record the content of your AI conversations</li>
+        <li>Track your browsing history</li>
+        <li>Collect your name, email, age, or any identifying information</li>
+        <li>Communicate with any external server</li>
+        <li>Share any information with parents, teachers, schools, or anyone else</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>Permissions explained</h2>
+      <p>f/riction requests access to specific URLs solely to detect when you navigate to those pages and display the planning overlay. The URLs monitored are: Claude, ChatGPT, Gemini, Grok, and Google search (including Google AI Mode). We do not read the content of those pages or your conversations.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Future features and optional data sharing</h2>
+      <p>We are building toward features that could give students, families, and educators a clearer picture of how AI is being used over time — things like usage patterns, planning quality trends, and progress over a school term.</p>
+      <p>Any feature that involves data leaving your device — including optional sharing with a parent, teacher, or school — will follow these principles without exception:</p>
+      <ul>
+        <li>Explicit opt-in before any data is collected or shared</li>
+        <li>A plain-language explanation of exactly what is shared, with whom, and for how long</li>
+        <li>The ability to withdraw consent and delete your data at any time</li>
+        <li>No conversation content — ever. Any future analytics will be limited to usage patterns (plan mode completed vs. skipped, time spent planning) not the substance of what students type</li>
+      </ul>
+
+      <div class="future-box">
+        <span class="future-label">Current status</span>
+        <p>None of these features exist yet. This section describes our design principles for future development, not current behavior. The extension today collects nothing and shares nothing.</p>
+      </div>
+    </div>
+
+    <div class="policy-section">
+      <h2>Children's privacy</h2>
+      <p>f/riction is designed for use by students, including those under 13. Because we currently collect no data whatsoever, f/riction is fully compliant with COPPA and similar children's privacy regulations. Any future features involving data collection will be designed with children's privacy as the primary constraint, not an afterthought.</p>
+      <p>Because f/riction stores data only on the student's local device and does not transmit, collect, or maintain student education records, it does not implicate FERPA. Future features involving data sharing with educators will be designed to comply with FERPA requirements and will be accompanied by appropriate data processing agreements with participating schools.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Changes to this policy</h2>
+      <p>When this policy changes, we will update the effective date at the top of this page. For changes that involve new data collection or sharing, we will notify users through the extension itself before the change takes effect — not after.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>Contact</h2>
+      <p>Michael Whitaker<br>
+      <a href="https://insertfriction.com">insertfriction.com</a><br>
+      <a href="mailto:insertfriction@gmail.com">insertfriction@gmail.com</a></p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p class="footer-left">designed friction builds stronger thinking</p>
+    <p class="footer-right">&copy; 2026 Friction</p>
+  </footer>
+
+</body>
+</html>
