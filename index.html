@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Friction — Think Before AI Thinks For You</title>
-  <meta name="description" content="Friction helps people think before AI thinks for them — and helps families navigate AI together. Starting with a browser extension. Building toward something bigger.">
+  <meta name="description" content="f/riction helps students think before AI thinks for them. The Chrome extension is now in private beta.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -121,24 +121,42 @@
     }
 
     .hero-label {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--warm-gray);
-      margin-bottom: 2.5rem;
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--cream);
+      margin-bottom: 0.8rem;
       opacity: 0;
       animation: fadeUp 0.8s ease forwards;
       animation-delay: 0.3s;
     }
 
+    .hero-label em {
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .hero-problem {
+      font-family: var(--sans);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      font-weight: 300;
+      line-height: 1.55;
+      color: var(--warm-gray);
+      max-width: 640px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.45s;
+    }
+
     .hero h1 {
       font-family: var(--serif);
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-size: clamp(2.5rem, 6vw, 4.8rem);
       font-weight: 400;
       line-height: 1.08;
       color: var(--white);
-      margin-bottom: 2rem;
+      margin-bottom: 2.25rem;
       opacity: 0;
       animation: fadeUp 0.8s ease forwards;
       animation-delay: 0.6s;
@@ -433,21 +451,19 @@
   <!-- Nav -->
   <nav>
     <a href="#" class="nav-logo"><span class="logo-f">f/</span>riction</a>
-    <a href="#signup" class="nav-cta">Join the waitlist</a>
+    <a href="#signup" class="nav-cta">Request access</a>
   </nav>
 
   <!-- Hero -->
   <div class="hero" style="position: relative;">
-    <p class="hero-label">Coming Soon</p>
-    <h1>Not all friction<br>is <em>bad.</em></h1>
-    <p class="hero-sub">
-      AI tools are designed to be frictionless. That's the problem.
-      <span class="inline-logo"><span class="logo-f">f/</span><span class="logo-r">riction</span></span> helps students think before AI thinks for them —
-      and helps families navigate AI together. Starting with a browser extension.
-      Building toward something bigger.
-    </p>
+    <p class="hero-label">Not all friction is <em>bad.</em></p>
+    <p class="hero-problem">AI tools are designed to be frictionless. That’s the problem.</p>
+    <h1>Think before AI<br>thinks <em>for you.</em></h1>
+    <div class="hero-sub">
+      <p><span class="inline-logo"><span class="logo-f">f/</span><span class="logo-r">riction</span></span> adds the right kind of pause at the moment a student reaches for AI — helping them own their start, shape the AI session, and keep the work theirs.</p>
+    </div>
     <div class="hero-cta">
-      <a href="#signup" class="nav-cta" style="font-size: 0.8rem; padding: 0.7rem 2rem;">Get early access</a>
+      <a href="#signup" class="nav-cta" style="font-size: 0.8rem; padding: 0.7rem 2rem;">Request beta access</a>
     </div>
     <div class="scroll-indicator">
       <span>Scroll</span>
@@ -470,7 +486,9 @@
       <p class="section-body">
         <strong>With AI, we've handed our kids the keys and hoped for the best.</strong> Most parents could teach their kids to drive from the passenger seat because 
         they'd been driving for decades. With AI, parents are learning alongside their kids — and often behind them. It's hard to lead with confidence when you're figuring it out yourself. 
-        But when we give our kids access to tools that can think, write, and solve for them — without structured on-ramps or guided practice — the result isn't just careless use. 
+        But when we give our kids access to tools that can think, write, and solve for them — without structured on-ramps or guided practice — the challenge is not just whether students use AI.
+        It is whether they can use it without surrendering the thinking that helps them grow.
+        The result isn't just careless use.
         It's a quiet cycle of reliance that short-circuits the deliberation, struggle, and growth that real learning requires.
       </p>
       <p class="section-body">
@@ -478,31 +496,6 @@
         They feel guilty about AI use. They fear losing what makes their thinking unique.
         They dumb down their writing to avoid suspicion. They want guidance — but the only thing
         many of them have heard is "don't use ChatGPT to cheat."
-      </p>
-    </div>
-  </section>
-
-  <div class="divider"><div class="divider-line"></div></div>
-
-  <!-- How It Works -->
-  <section>
-    <div class="reveal">
-      <p class="section-label">How It Works</p>
-      <h2 class="section-heading">Own your start.</h2>
-      <p class="section-body">
-        When a student opens ChatGPT, Claude, Gemini, or Grok, <span class="inline-logo"><span class="logo-f">f/</span><span class="logo-r">riction</span></span> steps in with
-        four quick questions: What are you working on? What do you already have?
-        What help do you want from AI — and what do you want to keep for yourself?
-      </p>
-      <p class="section-body">
-        In under three minutes, those answers become a well-crafted opening prompt
-        that produces dramatically better results than a vague "help me with my essay."
-        The AI knows your goal, respects your existing thinking, stays in its
-        lane, and doesn't touch what you want to own.
-      </p>
-      <p class="section-body">
-        <strong><span class="inline-logo"><span class="logo-f">f/</span><span class="logo-r">riction</span></span> doesn't slow you down. It makes AI use genuinely better —
-        and keeps more of the thinking where it belongs.</strong>
       </p>
     </div>
   </section>
@@ -522,26 +515,45 @@
 
   <div class="divider"><div class="divider-line"></div></div>
 
+  <!-- How It Works -->
+  <section>
+    <div class="reveal">
+      <p class="section-label">How It Works</p>
+      <h2 class="section-heading">Own your start. Shape the AI session. Keep the work yours.</h2>
+      <p class="section-body">
+        <span class="inline-logo"><span class="logo-f">f/</span><span class="logo-r">riction</span></span> works at the moment a student reaches for AI — not as a separate lesson, worksheet, or reflection exercise.
+      </p>
+      <p class="section-body">
+        Students name the work: an essay, research, studying, a problem set, creative project, coding, or something else.
+        Then they start with what they have: a thesis, notes, draft, assignment, error message, sketch, or even a rough idea.
+      </p>
+      <p class="section-body">
+        They shape the AI session by choosing the help they want and the friction they need:
+        brainstorm, explain, sharpen thinking, check direction, flag uncertainty, push back, ask for reasoning, or highlight blind spots.
+      </p>
+      <p class="section-body">
+        <strong>Before handing work to AI, they set ownership boundaries: what should AI help with, and what parts of the work should stay theirs.</strong>
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div></div>
+
   <!-- For Families -->
   <section>
     <div class="reveal">
       <p class="section-label">For Families</p>
       <h2 class="section-heading">Same side of the table.</h2>
       <p class="section-body">
-        <span class="inline-logo"><span class="logo-f">f/</span><span class="logo-r">riction</span></span> isn't a monitoring tool. It's not a filter. It's a shared practice —
-        because when it comes to AI, <strong>parents and kids share the same concerns.</strong>
-        They want to use AI confidently and skillfully — without losing the thinking,
-        creativity, and struggle that build who they are.
+        The browser extension is the first step: a shared structure students can use at the moment they reach for AI.
+        It is not a monitoring tool, a filter, or surveillance. It is a way to practice better AI use before habits harden.
       </p>
       <p class="section-body">
-        The browser extension is where it starts. What's coming next: an AI skills profile
-        that shows how you're growing as an intentional AI user. Family tools
-        that turn usage patterns into real conversations. Mid-session coaching that teaches
-        you to push back on AI and think more critically, in real time.
+        Over time, <span class="inline-logo"><span class="logo-f">f/</span><span class="logo-r">riction</span></span> may grow into tools that help families talk about AI use,
+        skill-building, and healthy boundaries.
       </p>
       <p class="section-body">
-        No surveillance. No secrets. Just honest navigation of something
-        new and important. Built by a family, for families.
+        No surveillance. No secrets. Just honest navigation of something new and important.
       </p>
     </div>
   </section>
@@ -551,19 +563,19 @@
   <!-- Signup -->
   <section class="signup-section" id="signup">
     <div class="reveal">
-      <p class="section-label">Early Access</p>
-      <h2 class="section-heading">Be first to try <span class="inline-logo"><span class="logo-f">f/</span><span class="logo-r">riction</span></span>.</h2>
+      <p class="section-label">Private Beta</p>
+      <h2 class="section-heading">Chrome extension now in private beta.</h2>
       <p class="signup-sub">
-        The browser extension is in early testing now. <br>Join the waitlist to get
-        early access and help shape what comes next.
+        The Chrome extension is now available for private beta testing. Request access to try it,
+        share feedback, and help shape what comes next.
       </p>
       <form class="signup-form" id="waitlist-form">
         <input type="email" name="email" placeholder="Your email" required>
-        <button type="submit">Join waitlist</button>
+        <button type="submit">Request access</button>
       </form>
-      <p class="signup-note">No spam. Just updates on the build.</p>
+      <p class="signup-note">No spam. Just access instructions and occasional build updates.</p>
       <p class="signup-success" id="signup-success">
-        You're on the list. We'll be in touch soon.
+        Thanks. I'll follow up with beta access details soon.
       </p>
     </div>
   </section>
